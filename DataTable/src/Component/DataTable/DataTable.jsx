@@ -7,20 +7,25 @@ export default function DataTable({ columns, fetchData, loadingMessage }) {
   const [data, setData] = useState();
 
   useEffect(() => {
-     fetchData()
-      .then((res) => console.log(res))
-      .then((data) => setData(data));
+    const fetchUsers = async () => {
+      await fetch("https://dummyjson.com/users")
+        .then((response) =>
+        response.json()
+      ).then(data => setData(data))
+    };
+
+    fetchUsers()
   }, [])
-  
-  console.log(data);
 
   return (
     <div>
       <Suspense fallback={<Loading message={loadingMessage} />}>
-      {columns.map((column) => {
-        return <p>{column}</p>;
-      })}
-    </Suspense>
+        {columns.map((column) => (
+          <p key={column} className="columns">
+            {column}
+          </p>
+        ))}
+      </Suspense>
     </div>
   );
 }

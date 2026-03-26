@@ -2,15 +2,16 @@ import './App.css'
 import DataTable from './Component/DataTable/DataTable';
 
 function App() {
-  const fetchUser = async () => {
-    fetch('https://dummyjson.com/users')
+  const fetchUsers = async () => {
+    await fetch('https://dummyjson.com/users')
+    .then(response => response.json());
   }
-
+    
   return (
     <>
         <DataTable
-          columns={["nom"]}
-        fetchData={() => { fetchUser }}
+          columns={["id","name"]}
+          fetchData={fetchUsers}
           loadingMessage={"Chargement..."}
         />
     </>
